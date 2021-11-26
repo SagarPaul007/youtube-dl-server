@@ -2,9 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const ytdl = require("ytdl-core");
 const app = express();
+// const fs = require("fs");
 
 const corsOptions = {
   origin: "https://vidr-sp.netlify.app",
+  // origin: "http://localhost:3000",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };
