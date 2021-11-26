@@ -3,12 +3,18 @@ const cors = require("cors");
 const ytdl = require("ytdl-core");
 const app = express();
 
-app.use(cors());
-app.use("/static", express.static("./static"));
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
+
+app.use(express.static("./static"));
 const port = process.env.PORT || 5000;
 
 app.get("/", (res) => {
-  res.sendFile("./index.html");
+  res.render("index.html");
 });
 
 app.get("/get", async (req, res) => {
@@ -38,6 +44,10 @@ app.get("/download", async (req, res) => {
   ytdl(url, { itag }).pipe(res);
 });
 
+// app.get('*', (req, res) => {
+//   res.render('error')
+// })
+
 app.listen(port, () => {
-  console.log("hey !!!");
+  console.log("Running ...");
 });
