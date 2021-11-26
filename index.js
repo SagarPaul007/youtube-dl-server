@@ -7,7 +7,7 @@ app.use(cors());
 app.use("/static", express.static("./static"));
 const port = process.env.PORT || 5000;
 
-app.get("", (res) => {
+app.get("/", (res) => {
   res.sendFile(`index.html`, { root: "./" });
 });
 
@@ -19,10 +19,11 @@ app.get("/get", (req, res) => {
     const info = await ytdl.getInfo(url);
     const title = info.videoDetails.title;
     const thumbnail = info.videoDetails.thumbnails[0].url;
-    const formats = info.formats;
+    let formats = info.formats;
 
     const audioFormats = ytdl.filterFormats(info.formats, "audioonly");
     // const format = ytdl.chooseFormat(info.formats, { quality: "136" });
+    formats = formats.filter((format) => format.hasAudio === true);
 
     res.send({ title, thumbnail, audioFormats, formats });
   })();
