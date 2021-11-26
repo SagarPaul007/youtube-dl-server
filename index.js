@@ -7,6 +7,10 @@ app.use(cors());
 app.use("/static", express.static("./static"));
 const port = process.env.PORT || 5000;
 
+app.get("", (res) => {
+  res.sendFile(`index.html`, { root: "./" });
+});
+
 app.get("/get", (req, res) => {
   const url = req.query.url;
   console.log(url);
