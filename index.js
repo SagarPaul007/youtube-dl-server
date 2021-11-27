@@ -39,11 +39,15 @@ app.get("/download", async (req, res) => {
   const itag = req.query.itag;
   const type = req.query.type;
 
-  const info = await ytdl.getInfo(url);
-  const title = info.videoDetails.title;
+  // const info = await ytdl.getInfo(url);
+  // const title = info.videoDetails.title;
 
-  res.header("Content-Disposition", `attachment;  filename="${title}.${type}"`);
-  ytdl(url, { itag }).pipe(res);
+  res.header("Content-Disposition", `attachment;  filename="file.${type}"`);
+  try {
+    ytdl(url, { itag }).pipe(res);
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // app.get('*', (req, res) => {
